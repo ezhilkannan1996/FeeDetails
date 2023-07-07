@@ -225,9 +225,17 @@
     <Compile Include="Data\spGetCourseListByStudentId_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\spGetFeeDetailsData_Result.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\spGetStudentList_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB_Setup\DB_Setup\DBSetup.cs" />
+    <Compile Include="DB_Setup\InsertScript\InsertScript.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spFeesDetailsInsert.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetFeeDetailsData.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetLastReceiptId.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -295,12 +303,12 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Stored_Procedures\Fees_Details\spGetCourseListByStudentId.cs" />
-    <Compile Include="Stored_Procedures\Fees_Details\spGetStudentList.cs" />
-    <Compile Include="Stored_Procedures\StudentRegistraion\DeleteStudent.cs" />
-    <Compile Include="Stored_Procedures\StudentRegistraion\GetStudent.cs" />
-    <Compile Include="Stored_Procedures\StudentRegistraion\InsertStudent.cs" />
-    <Compile Include="Stored_Procedures\StudentRegistraion\UpdateStudnet.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetCourseListByStudentId.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetStudentList.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\StudentRegistraion\DeleteStudent.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\StudentRegistraion\GetStudent.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\StudentRegistraion\InsertStudent.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\StudentRegistraion\UpdateStudnet.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,46 +1,89 @@
 ﻿using IMS.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace IMS.Pages
 {
     public partial class FeesDetails : System.Web.UI.Page
     {
-        int? data = null;
+        public int? selectedStudent = null;
+        public int? selectedCourse = null;
+        public DateTime? selectedDate = null;
+        public int? amount = null;
         InstituteEntities instituteEntities = new InstituteEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {                
-                DrpDwnStudentList.DataSource = instituteEntities.spGetStudentList().ToList();
-                DrpDwnStudentList.DataTextField = "StudentName";
-                DrpDwnStudentList.DataValueField = "Student_id";
-                DrpDwnStudentList.DataBind();
+            {
+                LoadStudentDropDown();
 
-                data = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-                PopulateSecondDropDown(data);
+                DataLoad();
+                UpdateIdAndAmount();
             }
         }
 
         protected void DrpDwnStudentList_SelectedIndexChanged(object sender, EventArgs e) 
         {
-            data = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-            PopulateSecondDropDown(data);
+            DataLoad();
+            UpdateIdAndAmount();
         }
 
-        private void PopulateSecondDropDown(int? selectedValue)
+        protected void DrpDwnCourseList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataLoad();
+            UpdateIdAndAmount();
+        }
+
+        private void DataLoad()
+        {
+            selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            LoadCourseDropDown(selectedStudent);
+            selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+            PopulateLabels(selectedStudent, selectedCourse);
+        }
+
+        private void LoadStudentDropDown()
+        {
+            DrpDwnStudentList.DataSource = instituteEntities.spGetStudentList().ToList();
+            DrpDwnStudentList.DataTextField = "StudentName";
+            DrpDwnStudentList.DataValueField = "Student_id";
+            DrpDwnStudentList.DataBind();
+        }
+
+        private void LoadCourseDropDown(int? selectedStudent)
         {
             DrpDwnCourseList.Items.Clear();
-            var courses = instituteEntities.spGetCourseListByStudentId(selectedValue).ToList();
+            var courses = instituteEntities.spGetCourseListByStudentId(selectedStudent).ToList();
 
             foreach (var course in courses)
             {
                 DrpDwnCourseList.Items.Add(new ListItem { Text = course.course_name, Value=course.course_id.ToString() });
             }
+        }
+
+        private void PopulateLabels(int? selectedStudent, int? selectedCourse)
+        {
+            var query = instituteEntities.spGetFeeDetailsData(selectedStudent,selectedCourse);
+            var data = query.FirstOrDefault();           
+            LabelAmountText.Text = (data.fees - data.Amount).ToString();
+            UpdateIdAndAmount();
+        }
+
+        private void UpdateIdAndAmount()
+        {
+            var query = instituteEntities.spGetLastReceiptId();
+            var data = query.FirstOrDefault();
+            LabelReceiptIdText.Text = (data + 1).ToString();
+        }
+
+        protected void ButtonSubmit_Click(object sender, EventArgs e)
+        {
+            DataLoad();
+            //selectedDate = Convert.ToDateTime(LabelDateText.Text);
+            selectedDate = Convert.ToDateTime("2023-10-01 15:00:00.000");
+            amount = Convert.ToInt32(LabelAmountText.Text);
+            instituteEntities.spFeesDetailsInsert(selectedStudent,selectedCourse,selectedDate,amount);
         }
     }
 }

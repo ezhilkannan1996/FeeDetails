@@ -14,20 +14,18 @@
 //SET QUOTED_IDENTIFIER ON
 //GO
 //-- =============================================
-//-- Author:		Ezhil
-//-- Create date: 07 / 07 / 2023
-//-- Description: Get student id and name for fees details page
-//-- =============================================
-//CREATE PROCEDURE spGetStudentList
-
+//-- Author:		< Author,,Name >
+// --Create date: < Create Date,,>
+// --Description:	< Description,,>
+// -- =============================================
+// CREATE PROCEDURE spFeesDetailsInsert
+//	-- Add the parameters for the stored procedure here
+//	@StudentId INT
+//	, @course_id INT
+//	, @DateOfPayment DATETIME
+//	, @Amount INT
 //AS
 //BEGIN
-//	-- SET NOCOUNT ON added to prevent extra result sets from
-//	-- interfering with SELECT statements.
-//	SET NOCOUNT ON;
-
-//--Insert statements for procedure here
-
-//SELECT Student_id, StudentName FROM StudentRegistration;
+//	INSERT INTO FeesDetails(StudentId, course_id, DateOfPayment, Amount) VALUES(@StudentId, @course_id, @DateOfPayment, @Amount);
 //END
 //GO

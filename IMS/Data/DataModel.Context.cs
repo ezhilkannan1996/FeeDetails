@@ -41,5 +41,44 @@ namespace IMS.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCourseListByStudentId_Result>("spGetCourseListByStudentId", idParameter);
         }
+    
+        public virtual ObjectResult<spGetFeeDetailsData_Result> spGetFeeDetailsData(Nullable<int> student_id, Nullable<int> course_id)
+        {
+            var student_idParameter = student_id.HasValue ?
+                new ObjectParameter("Student_id", student_id) :
+                new ObjectParameter("Student_id", typeof(int));
+    
+            var course_idParameter = course_id.HasValue ?
+                new ObjectParameter("course_id", course_id) :
+                new ObjectParameter("course_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetFeeDetailsData_Result>("spGetFeeDetailsData", student_idParameter, course_idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetLastReceiptId()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetLastReceiptId");
+        }
+    
+        public virtual int spFeesDetailsInsert(Nullable<int> studentId, Nullable<int> course_id, Nullable<System.DateTime> dateOfPayment, Nullable<int> amount)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            var course_idParameter = course_id.HasValue ?
+                new ObjectParameter("course_id", course_id) :
+                new ObjectParameter("course_id", typeof(int));
+    
+            var dateOfPaymentParameter = dateOfPayment.HasValue ?
+                new ObjectParameter("DateOfPayment", dateOfPayment) :
+                new ObjectParameter("DateOfPayment", typeof(System.DateTime));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spFeesDetailsInsert", studentIdParameter, course_idParameter, dateOfPaymentParameter, amountParameter);
+        }
     }
 }

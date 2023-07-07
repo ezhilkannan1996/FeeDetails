@@ -21,7 +21,7 @@
                         </div>
                         <div>
                             <asp:Label ID="LabelCourseList" runat="server" Text="Label">Select Course :</asp:Label>
-                            <asp:DropDownList ID="DrpDwnCourseList" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="DrpDwnCourseList" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DrpDwnCourseList_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div>
                             <asp:Label ID="LabelDate" runat="server" Text="Label">Date :</asp:Label>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-aligning btn-left-aligning" />
+                    <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-aligning btn-left-aligning" OnClick="ButtonSubmit_Click" />
                 </div>
             </div>
         </div>

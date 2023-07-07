@@ -16,25 +16,17 @@
 //-- =============================================
 //-- Author:		EZHIL
 //-- Create date: 07 / 07 / 2023
-//-- Description: Get the data for fees details page courses dropdown
+//-- Description: Get amount and receipt id using student id and course id
 //-- =============================================
-//CREATE PROCEDURE spGetCourseListByStudentId
+//CREATE PROCEDURE spGetFeeDetailsData
 //	-- Add the parameters for the stored procedure here
-//	@Id INT
+//	@Student_id INT,
+//	@course_id INT
 //AS
 //BEGIN
-//	-- SET NOCOUNT ON added to prevent extra result sets from
-//	-- interfering with SELECT statements.
-//	SET NOCOUNT ON;
-
-//--Insert statements for procedure here
-
-//SELECT Courses.course_id, Courses.course_name, Courses.fees, FeesDetails.Amount
-
-//FROM Courses
-
-//INNER JOIN StudentRegistration ON Courses.course_id = StudentRegistration.course_id
-
-//INNER JOIN FeesDetails ON StudentRegistration.Student_id = FeesDetails.StudentId WHERE Student_id = @Id;
+//     SELECT Courses.fees, FeesDetails.Amount FROM FeesDetails 
+//	 INNER JOIN StudentRegistration ON FeesDetails.StudentId = StudentRegistration.Student_id
+//	 INNER JOIN Courses ON FeesDetails.course_id = Courses.course_id
+//	 WHERE FeesDetails.StudentId = @Student_id AND FeesDetails.course_id = @course_id
 //END
 //GO
