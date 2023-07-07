@@ -297,6 +297,10 @@
     </Compile>
     <Compile Include="Stored_Procedures\Fees_Details\spGetCourseListByStudentId.cs" />
     <Compile Include="Stored_Procedures\Fees_Details\spGetStudentList.cs" />
+    <Compile Include="Stored_Procedures\StudentRegistraion\DeleteStudent.cs" />
+    <Compile Include="Stored_Procedures\StudentRegistraion\GetStudent.cs" />
+    <Compile Include="Stored_Procedures\StudentRegistraion\InsertStudent.cs" />
+    <Compile Include="Stored_Procedures\StudentRegistraion\UpdateStudnet.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
