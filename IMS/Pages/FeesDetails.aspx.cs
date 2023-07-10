@@ -11,9 +11,11 @@ namespace IMS.Pages
         public int? selectedCourse = null;
         public DateTime? selectedDate = null;
         public int? amount = null;
+        public int? remainingFee;
         InstituteEntities instituteEntities = new InstituteEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
+            LoadFeeDetailsGrid();
             DateTime dateTime = DateTime.Now;
             LabelDateText.Text = dateTime.ToString("yyyy-MM-dd hh:mm:ss tt");
             if (!IsPostBack)
@@ -68,6 +70,7 @@ namespace IMS.Pages
         {
             var query = instituteEntities.spGetFeeDetailsData(selectedStudent, selectedCourse);
             var data = query.FirstOrDefault();
+            remainingFee = data.RemainingBalance;
             LabelAmountText.Text = "Note*: " + data.RemainingBalance.ToString() + " to be paid";
             UpdateIdAndAmount();
         }
@@ -82,9 +85,39 @@ namespace IMS.Pages
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
             DataLoad();
-            selectedDate = Convert.ToDateTime(LabelDateText.Text);
-            amount = Convert.ToInt32(TxtAmountPaid.Text);
-            instituteEntities.spFeesDetailsInsert(selectedStudent,selectedCourse,selectedDate,amount);
+            if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount higher than mentioned');", true);
+            }
+            else
+            {
+                selectedDate = Convert.ToDateTime(LabelDateText.Text);
+                amount = Convert.ToInt32(TxtAmountPaid.Text);
+                instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
+                LoadFeeDetailsGrid();
+                TxtAmountPaid.Text = string.Empty;
+            }
+                
+        }
+
+        protected void TxtAmountPaid_TextChanged(object sender, EventArgs e)
+        {
+            //DataLoad();
+            //if (Convert.ToInt32(TxtAmountPaid.Text)>remainingFee)
+            //{
+            //    ButtonSubmit.Enabled = false;
+            //    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('This is an alert message.');", true);
+            //}
+            //else
+            //{
+            //    ButtonSubmit.Enabled = true;
+            //}
+        }
+
+        private void LoadFeeDetailsGrid()
+        {
+            FeeDetailsGrid.DataSource = instituteEntities.spGetAllFromFeeDetails();
+            FeeDetailsGrid.DataBind();
         }
     }
 }
