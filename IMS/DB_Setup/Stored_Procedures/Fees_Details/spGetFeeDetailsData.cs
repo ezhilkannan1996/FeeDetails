@@ -1,4 +1,8 @@
-﻿//-- ================================================
+﻿//using System.Collections.Generic;
+//using System.Web.UI.WebControls;
+//using System.Web.UI;
+
+//-- ================================================
 //--Template generated from Template Explorer using:
 //--Create Procedure(New Menu).SQL
 //--
@@ -19,14 +23,21 @@
 //-- Description: Get amount and receipt id using student id and course id
 //-- =============================================
 //CREATE PROCEDURE spGetFeeDetailsData
-//	-- Add the parameters for the stored procedure here
+//-- Add the parameters for the stored procedure here
 //	@Student_id INT,
-//	@course_id INT
+//    @course_id INT,
+//    @Result INT OUTPUT
 //AS
 //BEGIN
-//     SELECT Courses.fees, FeesDetails.Amount FROM FeesDetails 
-//	 INNER JOIN StudentRegistration ON FeesDetails.StudentId = StudentRegistration.Student_id
-//	 INNER JOIN Courses ON FeesDetails.course_id = Courses.course_id
-//	 WHERE FeesDetails.StudentId = @Student_id AND FeesDetails.course_id = @course_id
+//     DECLARE @AmountPaid INT, @Fee INT, @Result INT
+
+//     -- Retrieve the fee amount for the given student and course
+//     SELECT @Fee = fees FROM Courses WHERE course_id = @course_id;
+
+//--Calculate the remaining balance by subtracting the amount paid from the fee amount
+//     SELECT @AmountPaid = SUM(Amount) FROM FeesDetails WHERE StudentId = @Student_id AND course_id = @course_id;
+
+//SET @Result = @Fee - ISNULL(@AmountPaid, 0);
+
+//SELECT @Result AS RemainingBalance;
 //END
-//GO

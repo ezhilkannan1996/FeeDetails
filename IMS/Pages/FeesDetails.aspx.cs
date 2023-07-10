@@ -14,6 +14,8 @@ namespace IMS.Pages
         InstituteEntities instituteEntities = new InstituteEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
+            DateTime dateTime = DateTime.Now;
+            LabelDateText.Text = dateTime.ToString("yyyy-MM-dd hh:mm:ss tt");
             if (!IsPostBack)
             {
                 LoadStudentDropDown();
@@ -64,9 +66,9 @@ namespace IMS.Pages
 
         private void PopulateLabels(int? selectedStudent, int? selectedCourse)
         {
-            var query = instituteEntities.spGetFeeDetailsData(selectedStudent,selectedCourse);
-            var data = query.FirstOrDefault();           
-            LabelAmountText.Text = (data.fees - data.Amount).ToString();
+            var query = instituteEntities.spGetFeeDetailsData(selectedStudent, selectedCourse);
+            var data = query.FirstOrDefault();
+            LabelAmountText.Text = "Note*: " + data.RemainingBalance.ToString() + " to be paid";
             UpdateIdAndAmount();
         }
 
@@ -80,9 +82,8 @@ namespace IMS.Pages
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
             DataLoad();
-            //selectedDate = Convert.ToDateTime(LabelDateText.Text);
-            selectedDate = Convert.ToDateTime("2023-10-01 15:00:00.000");
-            amount = Convert.ToInt32(LabelAmountText.Text);
+            selectedDate = Convert.ToDateTime(LabelDateText.Text);
+            amount = Convert.ToInt32(TxtAmountPaid.Text);
             instituteEntities.spFeesDetailsInsert(selectedStudent,selectedCourse,selectedDate,amount);
         }
     }

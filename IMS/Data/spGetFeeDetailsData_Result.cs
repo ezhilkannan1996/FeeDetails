@@ -13,7 +13,6 @@ namespace IMS.Data
     
     public partial class spGetFeeDetailsData_Result
     {
-        public Nullable<int> fees { get; set; }
-        public int Amount { get; set; }
+        public Nullable<int> RemainingBalance { get; set; }
     }
 }

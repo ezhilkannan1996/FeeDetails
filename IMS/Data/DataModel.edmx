@@ -51,8 +51,7 @@
           <Property Type="String" Name="course_name" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="spGetFeeDetailsData_Result">
-          <Property Type="Int32" Name="fees" Nullable="true" />
-          <Property Type="Int32" Name="Amount" Nullable="false" />
+          <Property Type="Int32" Name="RemainingBalance" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -79,8 +78,7 @@
           <FunctionImportMapping FunctionImportName="spGetFeeDetailsData" FunctionName="InstituteModel.Store.spGetFeeDetailsData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="InstituteModel.spGetFeeDetailsData_Result">
-                <ScalarProperty Name="fees" ColumnName="fees" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="RemainingBalance" ColumnName="RemainingBalance" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

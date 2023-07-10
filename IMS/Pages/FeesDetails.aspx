@@ -29,6 +29,7 @@
                         </div>
                         <div>
                             <asp:Label ID="LabelAmount" runat="server" Text="Label">Amount</asp:Label>
+                            <asp:TextBox ID="TxtAmountPaid" runat="server"></asp:TextBox>
                             <asp:Label ID="LabelAmountText" runat="server" Text="Label"></asp:Label>
                         </div>
                     </div>
