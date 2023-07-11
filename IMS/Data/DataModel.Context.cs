@@ -55,11 +55,6 @@ namespace IMS.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetFeeDetailsData_Result>("spGetFeeDetailsData", student_idParameter, course_idParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> spGetLastReceiptId()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetLastReceiptId");
-        }
-    
         public virtual int spFeesDetailsInsert(Nullable<int> studentId, Nullable<int> course_id, Nullable<System.DateTime> dateOfPayment, Nullable<int> amount)
         {
             var studentIdParameter = studentId.HasValue ?
@@ -187,6 +182,11 @@ namespace IMS.Data
         public virtual ObjectResult<spGetAllFromFeeDetails_Result> spGetAllFromFeeDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAllFromFeeDetails_Result>("spGetAllFromFeeDetails");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetLastReceiptId()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetLastReceiptId");
         }
     }
 }

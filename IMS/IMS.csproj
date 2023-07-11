@@ -243,6 +243,7 @@
     <Compile Include="DB_Setup\DB_Setup\DBSetup.cs" />
     <Compile Include="DB_Setup\InsertScript\InsertScript.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spFeesDetailsInsert.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetAllFromFeeDetails.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetFeeDetailsData.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetLastReceiptId.cs" />
     <Compile Include="Default.aspx.cs">
