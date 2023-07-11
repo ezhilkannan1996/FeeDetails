@@ -188,5 +188,39 @@ namespace IMS.Data
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetLastReceiptId");
         }
+    
+        public virtual ObjectResult<spGetFeeDatailsById_Result> spGetFeeDatailsById(Nullable<int> receipt_Id)
+        {
+            var receipt_IdParameter = receipt_Id.HasValue ?
+                new ObjectParameter("Receipt_Id", receipt_Id) :
+                new ObjectParameter("Receipt_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetFeeDatailsById_Result>("spGetFeeDatailsById", receipt_IdParameter);
+        }
+    
+        public virtual int spUpdateFeeDatails(Nullable<int> receipt_id, Nullable<int> studentId, Nullable<int> course_id, Nullable<System.DateTime> dateOfPayment, Nullable<int> amount)
+        {
+            var receipt_idParameter = receipt_id.HasValue ?
+                new ObjectParameter("Receipt_id", receipt_id) :
+                new ObjectParameter("Receipt_id", typeof(int));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            var course_idParameter = course_id.HasValue ?
+                new ObjectParameter("course_id", course_id) :
+                new ObjectParameter("course_id", typeof(int));
+    
+            var dateOfPaymentParameter = dateOfPayment.HasValue ?
+                new ObjectParameter("DateOfPayment", dateOfPayment) :
+                new ObjectParameter("DateOfPayment", typeof(System.DateTime));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUpdateFeeDatails", receipt_idParameter, studentIdParameter, course_idParameter, dateOfPaymentParameter, amountParameter);
+        }
     }
 }

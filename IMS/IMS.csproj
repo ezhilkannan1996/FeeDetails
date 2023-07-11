@@ -228,6 +228,9 @@
     <Compile Include="Data\spGetCourseListByStudentId_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\spGetFeeDatailsById_Result.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\spGetFeeDetailsData_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -244,8 +247,10 @@
     <Compile Include="DB_Setup\InsertScript\InsertScript.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spFeesDetailsInsert.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetAllFromFeeDetails.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetFeeDatailsById.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetFeeDetailsData.cs" />
     <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spGetLastReceiptId.cs" />
+    <Compile Include="DB_Setup\Stored_Procedures\Fees_Details\spUpdateFeeDatails.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

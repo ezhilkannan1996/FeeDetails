@@ -12,31 +12,31 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="LabelReceiptId">Receipt ID:</label>
+                            <asp:label runat="server" CssClass="form-control-static">Receipt ID:</asp:label>
                             <asp:Label ID="LabelReceiptIdText" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">
-                            <label for="LabelStudentList">Select Student:</label>
+                            <asp:label runat="server" CssClass="form-control-static">Select Student:</asp:label>
                             <asp:DropDownList ID="DrpDwnStudentList" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DrpDwnStudentList_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <label for="LabelCourseList">Select Course:</label>
+                            <asp:label runat="server" CssClass="form-control-static">Select Course:</asp:label>
                             <asp:DropDownList ID="DrpDwnCourseList" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DrpDwnCourseList_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <label for="LabelDate">Date:</label>
+                            <asp:label runat="server" CssClass="form-control-static">Date:</asp:label>
                             <asp:TextBox ID="TxtDateText" runat="server" TextMode="DateTimeLocal" CssClass="form-control-static"></asp:TextBox>
                         </div>
                         <div class="form-group">
-                            <label for="LabelAmount">Amount:</label>
+                            <asp:label runat="server" CssClass="form-control-static">Amount:</asp:label>
                             <div class="input-group">
                                 <asp:TextBox ID="TxtAmountPaid" runat="server" CssClass="form-control" Text="0" Width="226px"></asp:TextBox>
-
                             </div>
                             <asp:Label ID="LabelAmountText" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">
                             <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" />
+                            <asp:Button ID="BtnCancel" runat="server" Text="Cancel" CssClass="btn btn-red" OnClick="ButtonCancel_Click" />
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -56,6 +56,15 @@
     </div>
     <style>
         /* Global Styles */
+
+        .btn-red {
+            background-color: red;
+            color: white;
+        }
+
+            .btn-red:hover {
+                color: white;
+            }
 
         button,
         input,
