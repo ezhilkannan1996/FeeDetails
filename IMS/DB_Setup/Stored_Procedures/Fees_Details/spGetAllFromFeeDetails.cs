@@ -16,27 +16,17 @@
 //-- =============================================
 //-- Author:		EZHIL
 //-- Create date: 07 / 07 / 2023
-//-- Description: Get the data for fees details page courses dropdown
+//-- Description: Get the data for fees details grid
 //-- =============================================
-//CREATE PROCEDURE spGetCourseListByStudentId
-//    -- Add the parameters for the stored procedure here
-
-//    @Id INT
+//CREATE PROCEDURE spGetAllFromFeeDetails
 //AS
 //BEGIN
-//    -- SET NOCOUNT ON added to prevent extra result sets from
-//    -- interfering with SELECT statements.
-
-//    SET NOCOUNT ON;
+//	-- SET NOCOUNT ON added to prevent extra result sets from
+//	-- interfering with SELECT statements.
+//	SET NOCOUNT ON;
 
 //--Insert statements for procedure here
 
-//SELECT Courses.course_id, Courses.course_name
-
-//FROM Courses
-
-//INNER JOIN StudentMaster ON Courses.course_id = StudentMaster.course_id
-
-//WHERE Student_id = @Id;
+//SELECT Receipt_id AS[Receipt Id], StudentId AS[Student Id], course_id AS[Course Id], DateOfPayment AS[Date Of Payment], Amount FROM FeesDetails;
 //END
 //GO

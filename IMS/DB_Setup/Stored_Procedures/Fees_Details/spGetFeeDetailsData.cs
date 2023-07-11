@@ -18,15 +18,14 @@
 //SET QUOTED_IDENTIFIER ON
 //GO
 //-- =============================================
-//-- Author:		EZHIL
+//--Author:		EZHIL
 //-- Create date: 07 / 07 / 2023
 //-- Description: Get amount and receipt id using student id and course id
 //-- =============================================
-//CREATE PROCEDURE spGetFeeDetailsData
-//-- Add the parameters for the stored procedure here
+//CREATE PROCEDURE [dbo].[spGetFeeDetailsData]
+//--Add the parameters for the stored procedure here
 //	@Student_id INT,
-//    @course_id INT,
-//    @Result INT OUTPUT
+//   @course_id INT
 //AS
 //BEGIN
 //     DECLARE @AmountPaid INT, @Fee INT, @Result INT

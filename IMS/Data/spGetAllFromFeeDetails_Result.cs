@@ -13,8 +13,10 @@ namespace IMS.Data
     
     public partial class spGetAllFromFeeDetails_Result
     {
-        public string StudentName { get; set; }
-        public string course_name { get; set; }
-        public Nullable<int> AMOUNT { get; set; }
+        public int Receipt_Id { get; set; }
+        public Nullable<System.DateTime> Date_Of_Payment { get; set; }
+        public int Amount { get; set; }
+        public string Student_Name { get; set; }
+        public string Course_Name { get; set; }
     }
 }

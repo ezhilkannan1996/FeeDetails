@@ -42,13 +42,13 @@ namespace IMS.Pages
         protected global::System.Web.UI.WebControls.DropDownList DrpDwnCourseList;
 
         /// <summary>
-        /// LabelDateText control.
+        /// TxtDateText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelDateText;
+        protected global::System.Web.UI.WebControls.TextBox TxtDateText;
 
         /// <summary>
         /// TxtAmountPaid control.
