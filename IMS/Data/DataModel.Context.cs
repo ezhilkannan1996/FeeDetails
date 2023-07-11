@@ -188,5 +188,27 @@ namespace IMS.Data
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAllFromFeeDetails_Result>("spGetAllFromFeeDetails");
         }
+    
+        public virtual ObjectResult<Sp_CourseCompletedList_Result> Sp_CourseCompletedList(Nullable<System.DateTime> completionDate)
+        {
+            var completionDateParameter = completionDate.HasValue ?
+                new ObjectParameter("CompletionDate", completionDate) :
+                new ObjectParameter("CompletionDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_CourseCompletedList_Result>("Sp_CourseCompletedList", completionDateParameter);
+        }
+    
+        public virtual ObjectResult<GetCompletedStudentsByDatePicker_Result> GetCompletedStudentsByDatePicker(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompletedStudentsByDatePicker_Result>("GetCompletedStudentsByDatePicker", startDateParameter, endDateParameter);
+        }
     }
 }
