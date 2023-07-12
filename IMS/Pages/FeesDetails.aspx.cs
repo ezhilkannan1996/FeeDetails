@@ -17,6 +17,15 @@ namespace IMS.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (selectedStudent != null)
+            {
+                LoadFeeDetailsGrid(selectedStudent);
+            }
+            else
+            {
+                LoadStudentDropDown();
+            }
+
             if (ButtonSubmit.Text == "Update")
             {
                 TxtDateText.Text = TxtDateText.Text;
@@ -108,46 +117,54 @@ namespace IMS.Pages
 
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            if (ButtonSubmit.Text == "Submit")
+            if (DateTime.Today < Convert.ToDateTime(TxtDateText.Text))
             {
-                selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-                selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
-                PopulateLabels(selectedStudent, selectedCourse);
-                if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee || Convert.ToInt32(TxtAmountPaid.Text) <= 0)
+                if (ButtonSubmit.Text == "Submit")
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
-                }
-                else
-                {
-                    selectedDate = Convert.ToDateTime(TxtDateText.Text);
-                    amount = Convert.ToInt32(TxtAmountPaid.Text);
-                    instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
-                    LoadFeeDetailsGrid(selectedStudent);
-                    TxtAmountPaid.Text = string.Empty;
+                    selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
                     PopulateLabels(selectedStudent, selectedCourse);
-                    LoadNextPaymentAfterUpdate();
+                    if (Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) > remainingFee || Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) <= 0)
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
+                    }
+                    else
+                    {
+                        selectedDate = Convert.ToDateTime(TxtDateText.Text);
+                        amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
+                        instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
+                        LoadFeeDetailsGrid(selectedStudent);
+                        TxtAmountPaid.Text = string.Empty;
+                        PopulateLabels(selectedStudent, selectedCourse);
+                        LoadNextPaymentAfterUpdate();
+                    }
+                }
+                if (ButtonSubmit.Text == "Update")
+                {
+                    selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+                    PopulateLabels(selectedStudent, selectedCourse);
+                    if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee || Convert.ToInt32(TxtAmountPaid.Text) <= 0)
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
+                    }
+                    else
+                    {
+                        receiptId = Convert.ToInt32(LabelReceiptIdText.Text);
+                        selectedDate = Convert.ToDateTime(TxtDateText.Text);
+                        amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
+                        instituteEntities.spUpdateFeeDatails(receiptId, selectedStudent, selectedCourse, selectedDate, amount);
+                        LoadFeeDetailsGrid(selectedStudent);
+                        TxtAmountPaid.Text = string.Empty;
+                        PopulateLabels(selectedStudent, selectedCourse);
+                        LoadNextPaymentAfterUpdate();
+                    }
                 }
             }
-            if (ButtonSubmit.Text == "Update")
+            else
             {
-                selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-                selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
-                PopulateLabels(selectedStudent, selectedCourse);
-                if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee || Convert.ToInt32(TxtAmountPaid.Text) <= 0)
-                {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
-                }
-                else
-                {
-                    receiptId = Convert.ToInt32(LabelReceiptIdText.Text);
-                    selectedDate = Convert.ToDateTime(TxtDateText.Text);
-                    amount = Convert.ToInt32(TxtAmountPaid.Text);
-                    instituteEntities.spUpdateFeeDatails(receiptId, selectedStudent, selectedCourse, selectedDate, amount);
-                    LoadFeeDetailsGrid(selectedStudent);
-                    TxtAmountPaid.Text = string.Empty;
-                    PopulateLabels(selectedStudent, selectedCourse);
-                    LoadNextPaymentAfterUpdate();
-                }
+                BtnCancel.Visible = true;
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Select date today or greater than today');", true);
             }
         }
 

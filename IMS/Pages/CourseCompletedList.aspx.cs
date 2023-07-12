@@ -27,7 +27,7 @@ namespace IMS.Pages
                if (RadioButton1.Checked)
                 {
                     
-                    GridView1.DataSource = context.Sp_CourseCompletedList(Convert.ToDateTime(TextBox1.Text.Trim())).ToList();
+                    //GridView1.DataSource = context.Sp_CourseCompletedList(Convert.ToDateTime(TextBox1.Text.Trim())).ToList();
 
                     GridView1.DataBind(); 
                    
@@ -40,7 +40,7 @@ namespace IMS.Pages
 
                     TextBox3.Visible = true;
                     TextBox3.Text= DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
-                    GridView1.DataSource = context.GetCompletedStudentsByDatePicker(Convert.ToDateTime(TextBox1.Text.Trim()), Convert.ToDateTime(TextBox3.Text.Trim())).ToList();
+                    //GridView1.DataSource = context.GetCompletedStudentsByDatePicker(Convert.ToDateTime(TextBox1.Text.Trim()), Convert.ToDateTime(TextBox3.Text.Trim())).ToList();
 
                     GridView1.DataBind();
 
