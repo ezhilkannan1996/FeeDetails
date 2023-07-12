@@ -14,9 +14,9 @@ namespace IMS.Data
     public partial class spGetAllFromFeeDetails_Result
     {
         public int Receipt_Id { get; set; }
-        public Nullable<System.DateTime> Date_Of_Payment { get; set; }
-        public int Amount { get; set; }
         public string Student_Name { get; set; }
         public string Course_Name { get; set; }
+        public Nullable<System.DateTime> Date_Of_Payment { get; set; }
+        public int Amount { get; set; }
     }
 }

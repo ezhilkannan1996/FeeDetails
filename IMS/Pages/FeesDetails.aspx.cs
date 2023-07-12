@@ -17,7 +17,6 @@ namespace IMS.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadFeeDetailsGrid();
             if (ButtonSubmit.Text == "Update")
             {
                 TxtDateText.Text = TxtDateText.Text;
@@ -26,7 +25,7 @@ namespace IMS.Pages
             {
                 TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
             }
-            
+
             if (!IsPostBack)
             {
                 LoadStudentDropDown();
@@ -39,19 +38,18 @@ namespace IMS.Pages
 
         protected void DrpDwnStudentList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            LoadCourseDropDown(selectedStudent);
+            LoadFeeDetailsGrid(selectedStudent);
             if (ButtonSubmit.Text == "Submit")
             {
                 GenerateReceiptId();
-                selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-                LoadCourseDropDown(selectedStudent);
                 PopulateLabels(selectedStudent, selectedCourse);
             }
             if (ButtonSubmit.Text == "Update")
             {
                 TxtDateText.Text = TxtDateText.Text;
                 BtnCancel.Visible = true;
-                selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
-                LoadCourseDropDown(selectedStudent);
             }
         }
 
@@ -78,6 +76,7 @@ namespace IMS.Pages
             DrpDwnStudentList.DataValueField = "Student_id";
             DrpDwnStudentList.DataBind();
             selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            LoadFeeDetailsGrid(selectedStudent);
         }
 
         private void LoadCourseDropDown(int? selectedStudent)
@@ -123,7 +122,7 @@ namespace IMS.Pages
                     selectedDate = Convert.ToDateTime(TxtDateText.Text);
                     amount = Convert.ToInt32(TxtAmountPaid.Text);
                     instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
-                    LoadFeeDetailsGrid();
+                    LoadFeeDetailsGrid(selectedStudent);
                     TxtAmountPaid.Text = string.Empty;
                     PopulateLabels(selectedStudent, selectedCourse);
                     LoadNextPaymentAfterUpdate();
@@ -144,7 +143,7 @@ namespace IMS.Pages
                     selectedDate = Convert.ToDateTime(TxtDateText.Text);
                     amount = Convert.ToInt32(TxtAmountPaid.Text);
                     instituteEntities.spUpdateFeeDatails(receiptId, selectedStudent, selectedCourse, selectedDate, amount);
-                    LoadFeeDetailsGrid();
+                    LoadFeeDetailsGrid(selectedStudent);
                     TxtAmountPaid.Text = string.Empty;
                     PopulateLabels(selectedStudent, selectedCourse);
                     LoadNextPaymentAfterUpdate();
@@ -168,15 +167,24 @@ namespace IMS.Pages
             TxtAmountPaid.Text = string.Empty;
         }
 
-        private void LoadFeeDetailsGrid()
+        private void LoadFeeDetailsGrid(int? StudentId)
         {
-            FeeDetailsGrid.DataSource = instituteEntities.spGetAllFromFeeDetails();
+            FeeDetailsGrid.DataSource = instituteEntities.spGetAllFromFeeDetails(StudentId);
             FeeDetailsGrid.DataBind();
         }
 
         protected void FeeDetailsGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             FeeDetailsGrid.PageIndex = e.NewPageIndex;
+            if (ButtonSubmit.Text == "Submit")
+            {
+                BtnCancel.Visible = false;
+            }
+            if (ButtonSubmit.Text == "Update")
+            {
+                BtnCancel.Visible = true;
+            }
+
         }
 
         protected void FeeDetailsGrid_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -187,7 +195,7 @@ namespace IMS.Pages
                 BtnCancel.Visible = true;
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
                 GridViewRow selectedRow = FeeDetailsGrid.Rows[rowIndex];
-
+                LabelAmountText.Text = string.Empty;
                 receiptId = Convert.ToInt32(selectedRow.Cells[1].Text);
                 spGetFeeDatailsById_Result result = new spGetFeeDatailsById_Result();
                 var data = instituteEntities.spGetFeeDatailsById(receiptId);

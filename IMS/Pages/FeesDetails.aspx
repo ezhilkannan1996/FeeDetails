@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <asp:label runat="server" CssClass="form-control-static">Date:</asp:label>
-                            <asp:TextBox ID="TxtDateText" runat="server" TextMode="DateTimeLocal" CssClass="form-control-static"></asp:TextBox>
+                            <asp:TextBox ID="TxtDateText" runat="server" TextMode="DateTimeLocal" CssClass="form-control"></asp:TextBox>
                         </div>
                         <div class="form-group">
                             <asp:label runat="server" CssClass="form-control-static">Amount:</asp:label>
@@ -46,7 +46,7 @@
                             <HeaderStyle CssClass="grid-header" />
                             <RowStyle CssClass="grid-row" />
                             <Columns>
-                                <asp:ButtonField CommandName="SelectRow" Text="Select" />
+                                <asp:ButtonField CommandName="SelectRow" Text="Edit" />
                             </Columns>
                         </asp:GridView>
                     </div>
@@ -63,6 +63,7 @@
         }
 
             .btn-red:hover {
+                background-color: red;
                 color: white;
             }
 

@@ -184,7 +184,6 @@ namespace IMS.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAllFromFeeDetails_Result>("spGetAllFromFeeDetails");
         }
     
-<<<<<<< HEAD
         public virtual ObjectResult<Sp_CourseCompletedList_Result> Sp_CourseCompletedList(Nullable<System.DateTime> completionDate)
         {
             var completionDateParameter = completionDate.HasValue ?
@@ -193,23 +192,24 @@ namespace IMS.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_CourseCompletedList_Result>("Sp_CourseCompletedList", completionDateParameter);
         }
-    
+
         public virtual ObjectResult<GetCompletedStudentsByDatePicker_Result> GetCompletedStudentsByDatePicker(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
                 new ObjectParameter("StartDate", typeof(System.DateTime));
-    
+
             var endDateParameter = endDate.HasValue ?
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompletedStudentsByDatePicker_Result>("GetCompletedStudentsByDatePicker", startDateParameter, endDateParameter);
-=======
+        }
+
         public virtual ObjectResult<Nullable<int>> spGetLastReceiptId()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetLastReceiptId");
->>>>>>> 0e0b0f2b92ec99f1fe823c7dd2ef0c688c6c01b6
+
         }
     
         public virtual ObjectResult<spGetFeeDatailsById_Result> spGetFeeDatailsById(Nullable<int> receipt_Id)

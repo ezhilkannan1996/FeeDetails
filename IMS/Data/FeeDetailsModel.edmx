@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InstituteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="spFeesDetailsInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="course_id" Type="int" Mode="In" />
+          <Parameter Name="DateOfPayment" Type="datetime" Mode="In" />
+          <Parameter Name="Amount" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetAllFromFeeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetCourseListByStudentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetFeeDatailsById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Receipt_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetFeeDetailsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Student_id" Type="int" Mode="In" />
+          <Parameter Name="course_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetLastReceiptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetStudentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spUpdateFeeDatails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Receipt_id" Type="int" Mode="In" />
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="course_id" Type="int" Mode="In" />
+          <Parameter Name="DateOfPayment" Type="datetime" Mode="In" />
+          <Parameter Name="Amount" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="InstituteModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InstituteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InstituteEntities1" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="spFeesDetailsInsert">
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="course_id" Mode="In" Type="Int32" />
+            <Parameter Name="DateOfPayment" Mode="In" Type="DateTime" />
+            <Parameter Name="Amount" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetAllFromFeeDetails" ReturnType="Collection(InstituteModel.spGetAllFromFeeDetails_Result)" />
+          <FunctionImport Name="spGetCourseListByStudentId" ReturnType="Collection(InstituteModel.spGetCourseListByStudentId_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetFeeDatailsById" ReturnType="Collection(InstituteModel.spGetFeeDatailsById_Result)">
+            <Parameter Name="Receipt_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetFeeDetailsData" ReturnType="Collection(Int32)">
+            <Parameter Name="Student_id" Mode="In" Type="Int32" />
+            <Parameter Name="course_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetLastReceiptId" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="spGetStudentList" ReturnType="Collection(InstituteModel.spGetStudentList_Result)" />
+          <FunctionImport Name="spUpdateFeeDatails">
+            <Parameter Name="Receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="course_id" Mode="In" Type="Int32" />
+            <Parameter Name="DateOfPayment" Mode="In" Type="DateTime" />
+            <Parameter Name="Amount" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="spGetAllFromFeeDetails_Result">
+          <Property Type="Int32" Name="Receipt_Id" Nullable="false" />
+          <Property Type="String" Name="Student_Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Course_Name" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="Date_Of_Payment" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Amount" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spGetCourseListByStudentId_Result">
+          <Property Type="Int32" Name="course_id" Nullable="false" />
+          <Property Type="String" Name="course_name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spGetFeeDatailsById_Result">
+          <Property Type="Int32" Name="Receipt_id" Nullable="false" />
+          <Property Type="Int32" Name="StudentId" Nullable="true" />
+          <Property Type="Int32" Name="course_id" Nullable="true" />
+          <Property Type="DateTime" Name="DateOfPayment" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Amount" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spGetStudentList_Result">
+          <Property Type="Int32" Name="Student_id" Nullable="false" />
+          <Property Type="String" Name="StudentName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InstituteModelStoreContainer" CdmEntityContainer="InstituteEntities1" >
+          <FunctionImportMapping FunctionImportName="spFeesDetailsInsert" FunctionName="InstituteModel.Store.spFeesDetailsInsert" />
+          <FunctionImportMapping FunctionImportName="spGetAllFromFeeDetails" FunctionName="InstituteModel.Store.spGetAllFromFeeDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InstituteModel.spGetAllFromFeeDetails_Result">
+                <ScalarProperty Name="Receipt_Id" ColumnName="Receipt Id" />
+                <ScalarProperty Name="Student_Name" ColumnName="Student Name" />
+                <ScalarProperty Name="Course_Name" ColumnName="Course Name" />
+                <ScalarProperty Name="Date_Of_Payment" ColumnName="Date Of Payment" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetCourseListByStudentId" FunctionName="InstituteModel.Store.spGetCourseListByStudentId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InstituteModel.spGetCourseListByStudentId_Result">
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="course_name" ColumnName="course_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetFeeDatailsById" FunctionName="InstituteModel.Store.spGetFeeDatailsById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InstituteModel.spGetFeeDatailsById_Result">
+                <ScalarProperty Name="Receipt_id" ColumnName="Receipt_id" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="DateOfPayment" ColumnName="DateOfPayment" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetFeeDetailsData" FunctionName="InstituteModel.Store.spGetFeeDetailsData" />
+          <FunctionImportMapping FunctionImportName="spGetLastReceiptId" FunctionName="InstituteModel.Store.spGetLastReceiptId" />
+          <FunctionImportMapping FunctionImportName="spGetStudentList" FunctionName="InstituteModel.Store.spGetStudentList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InstituteModel.spGetStudentList_Result">
+                <ScalarProperty Name="Student_id" ColumnName="Student_id" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spUpdateFeeDatails" FunctionName="InstituteModel.Store.spUpdateFeeDatails" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
