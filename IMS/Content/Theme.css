@@ -196,8 +196,6 @@
 
 body {
     margin: 0;
-    font-family: var(--bs-body-font-family);
-    font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
     color: var(--bs-body-color);
@@ -346,7 +344,6 @@ sup {
 
 a {
     color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
-    text-decoration: underline
 }
 
     a:hover {
@@ -2261,7 +2258,6 @@ progress {
     display: block;
     width: 100%;
     padding: .375rem .75rem;
-    font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: #073642;
