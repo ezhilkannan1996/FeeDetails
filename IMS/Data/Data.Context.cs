@@ -15,10 +15,10 @@ namespace IMS.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class InstituteEntities1 : DbContext
+    public partial class InstituteEntities : DbContext
     {
-        public InstituteEntities1()
-            : base("name=InstituteEntities1")
+        public InstituteEntities()
+            : base("name=InstituteEntities")
         {
         }
     
@@ -49,9 +49,13 @@ namespace IMS.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spFeesDetailsInsert", studentIdParameter, course_idParameter, dateOfPaymentParameter, amountParameter);
         }
     
-        public virtual ObjectResult<spGetAllFromFeeDetails_Result> spGetAllFromFeeDetails()
+        public virtual ObjectResult<spGetAllFromFeeDetails_Result> spGetAllFromFeeDetails(Nullable<int> studentId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAllFromFeeDetails_Result>("spGetAllFromFeeDetails");
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAllFromFeeDetails_Result>("spGetAllFromFeeDetails", studentIdParameter);
         }
     
         public virtual ObjectResult<spGetCourseListByStudentId_Result> spGetCourseListByStudentId(Nullable<int> id)

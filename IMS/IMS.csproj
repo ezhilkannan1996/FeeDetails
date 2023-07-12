@@ -121,25 +121,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Theme.css" />
-    <Content Include="Data\DataModel.Context.tt">
+    <Content Include="Data\Data.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
+      <DependentUpon>Data.edmx</DependentUpon>
+      <LastGenOutput>Data.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Data\DataModel.tt">
+    <Content Include="Data\Data.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-      <LastGenOutput>DataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\FeeDetailsModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FeeDetailsModel.edmx</DependentUpon>
-      <LastGenOutput>FeeDetailsModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\FeeDetailsModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FeeDetailsModel.edmx</DependentUpon>
-      <LastGenOutput>FeeDetailsModel.cs</LastGenOutput>
+      <DependentUpon>Data.edmx</DependentUpon>
+      <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -153,19 +143,12 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Data\DataModel.edmx">
+    <EntityDeploy Include="Data\Data.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Data.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Data\DataModel.edmx.diagram">
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Data\FeeDetailsModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FeeDetailsModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Data\FeeDetailsModel.edmx.diagram">
-      <DependentUpon>FeeDetailsModel.edmx</DependentUpon>
+    <Content Include="Data\Data.edmx.diagram">
+      <DependentUpon>Data.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\CourseCompletedList.aspx" />
@@ -225,62 +208,32 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataModel.Context.cs">
+    <Compile Include="Data\Data.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.Context.tt</DependentUpon>
+      <DependentUpon>Data.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataModel.cs">
+    <Compile Include="Data\Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataModel.Designer.cs">
+    <Compile Include="Data\Data.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\FeeDetailsModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FeeDetailsModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\FeeDetailsModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FeeDetailsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\FeeDetailsModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FeeDetailsModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\GetCompletedStudentsByDatePicker_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
+      <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\spGetAllFromFeeDetails_Result.cs">
-      <DependentUpon>FeeDetailsModel.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\spGetCourseListByStudentId_Result.cs">
-      <DependentUpon>FeeDetailsModel.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\spGetFeeDatailsById_Result.cs">
-      <DependentUpon>FeeDetailsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\spGetFeeDetailsData_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\spGetStudentList_Result.cs">
-      <DependentUpon>FeeDetailsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Sp_CourseCompletedList_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\sp_helpdiagrams_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
+      <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Setup\DB_Setup\DBSetup.cs" />
     <Compile Include="DB_Setup\InsertScript\InsertScript.cs" />

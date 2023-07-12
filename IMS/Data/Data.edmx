@@ -11,7 +11,9 @@
           <Parameter Name="DateOfPayment" Type="datetime" Mode="In" />
           <Parameter Name="Amount" Type="int" Mode="In" />
         </Function>
-        <Function Name="spGetAllFromFeeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetAllFromFeeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+        </Function>
         <Function Name="spGetCourseListByStudentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -37,14 +39,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InstituteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="InstituteEntities1" annotation:LazyLoadingEnabled="true" >
+        <EntityContainer Name="InstituteEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="spFeesDetailsInsert">
             <Parameter Name="StudentId" Mode="In" Type="Int32" />
             <Parameter Name="course_id" Mode="In" Type="Int32" />
             <Parameter Name="DateOfPayment" Mode="In" Type="DateTime" />
             <Parameter Name="Amount" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spGetAllFromFeeDetails" ReturnType="Collection(InstituteModel.spGetAllFromFeeDetails_Result)" />
+          <FunctionImport Name="spGetAllFromFeeDetails" ReturnType="Collection(InstituteModel.spGetAllFromFeeDetails_Result)">
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="spGetCourseListByStudentId" ReturnType="Collection(InstituteModel.spGetCourseListByStudentId_Result)">
             <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -92,7 +96,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="InstituteModelStoreContainer" CdmEntityContainer="InstituteEntities1" >
+        <EntityContainerMapping StorageEntityContainer="InstituteModelStoreContainer" CdmEntityContainer="InstituteEntities" >
           <FunctionImportMapping FunctionImportName="spFeesDetailsInsert" FunctionName="InstituteModel.Store.spFeesDetailsInsert" />
           <FunctionImportMapping FunctionImportName="spGetAllFromFeeDetails" FunctionName="InstituteModel.Store.spGetAllFromFeeDetails">
             <ResultMapping>

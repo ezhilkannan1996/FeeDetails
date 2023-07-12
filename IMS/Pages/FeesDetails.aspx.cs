@@ -95,8 +95,8 @@ namespace IMS.Pages
         {
             var query = instituteEntities.spGetFeeDetailsData(selectedStudent, selectedCourse);
             var data = query.FirstOrDefault();
-            remainingFee = data.RemainingBalance;
-            LabelAmountText.Text = "Note*: " + data.RemainingBalance.ToString() + " to be paid";
+            remainingFee = data.Value;
+            LabelAmountText.Text = "Note*: " + data.ToString() + " to be paid";
         }
 
         private void GenerateReceiptId()
