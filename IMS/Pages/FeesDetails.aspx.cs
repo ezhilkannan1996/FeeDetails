@@ -17,24 +17,20 @@ namespace IMS.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(LblSelectedStudent.Text))
+               selectedStudent = Convert.ToInt32(LblSelectedStudent.Text);
+            if (!string.IsNullOrEmpty(LblSelectedCourse.Text))
+                selectedCourse = Convert.ToInt32(LblSelectedCourse.Text);
             if (selectedStudent != null)
-            {
-                LoadFeeDetailsGrid(selectedStudent);
-            }
+               LoadFeeDetailsGrid(selectedStudent);
             else
-            {
-                LoadStudentDropDown();
-            }
+               LoadStudentDropDown();         
 
             if (ButtonSubmit.Text == "Update")
-            {
-                TxtDateText.Text = TxtDateText.Text;
-            }
+               TxtDateText.Text = TxtDateText.Text;
             if (ButtonSubmit.Text == "Submit")
-            {
-                TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
-            }
-
+               TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+            
             if (!IsPostBack)
             {
                 LoadStudentDropDown();
@@ -48,6 +44,7 @@ namespace IMS.Pages
         protected void DrpDwnStudentList_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            LblSelectedStudent.Text = selectedStudent.ToString();
             LoadCourseDropDown(selectedStudent);
             LoadFeeDetailsGrid(selectedStudent);
             if (ButtonSubmit.Text == "Submit")
@@ -68,7 +65,10 @@ namespace IMS.Pages
             {
                 GenerateReceiptId();
                 selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                LblSelectedStudent.Text = selectedStudent.ToString();
+                LblSelectedStudent.Text = selectedStudent.ToString();
                 selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+                LblSelectedCourse.Text = selectedCourse.ToString();
                 PopulateLabels(selectedStudent, selectedCourse);
             }
             if (ButtonSubmit.Text == "Update")
@@ -84,7 +84,9 @@ namespace IMS.Pages
             DrpDwnStudentList.DataTextField = "StudentName";
             DrpDwnStudentList.DataValueField = "Student_id";
             DrpDwnStudentList.DataBind();
-            selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            if (string.IsNullOrEmpty(LblSelectedStudent.Text))
+                selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+            LblSelectedStudent.Text = selectedStudent.ToString();
             LoadFeeDetailsGrid(selectedStudent);
         }
 
@@ -98,6 +100,7 @@ namespace IMS.Pages
                 DrpDwnCourseList.Items.Add(new ListItem { Text = course.course_name, Value = course.course_id.ToString() });
             }
             selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+            LblSelectedCourse.Text = selectedCourse.ToString();
         }
 
         private void PopulateLabels(int? selectedStudent, int? selectedCourse)
@@ -121,8 +124,11 @@ namespace IMS.Pages
             {
                 if (ButtonSubmit.Text == "Submit")
                 {
-                    selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    if (string.IsNullOrEmpty(LblSelectedStudent.Text))
+                        selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    LblSelectedStudent.Text = selectedStudent.ToString();
                     selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+                    LblSelectedCourse.Text = selectedCourse.ToString();
                     PopulateLabels(selectedStudent, selectedCourse);
                     if (Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) > remainingFee || Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) <= 0)
                     {
@@ -141,13 +147,14 @@ namespace IMS.Pages
                 }
                 if (ButtonSubmit.Text == "Update")
                 {
-                    selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    if (string.IsNullOrEmpty(LblSelectedStudent.Text))
+                        selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
+                    LblSelectedStudent.Text = selectedStudent.ToString();
                     selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
+                    LblSelectedCourse.Text = selectedCourse.ToString();
                     PopulateLabels(selectedStudent, selectedCourse);
                     if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee || Convert.ToInt32(TxtAmountPaid.Text) <= 0)
-                    {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
-                    }
+                       ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
                     else
                     {
                         receiptId = Convert.ToInt32(LabelReceiptIdText.Text);
@@ -176,8 +183,6 @@ namespace IMS.Pages
         private void LoadNextPaymentAfterUpdate()
         {
             GenerateReceiptId();
-            LoadStudentDropDown();
-            LoadCourseDropDown(selectedStudent);
             PopulateLabels(selectedStudent, selectedCourse);
             ButtonSubmit.Text = "Submit";
             BtnCancel.Visible = false;
@@ -194,14 +199,9 @@ namespace IMS.Pages
         {
             FeeDetailsGrid.PageIndex = e.NewPageIndex;
             if (ButtonSubmit.Text == "Submit")
-            {
                 BtnCancel.Visible = false;
-            }
             if (ButtonSubmit.Text == "Update")
-            {
                 BtnCancel.Visible = true;
-            }
-
         }
 
         protected void FeeDetailsGrid_RowCommand(object sender, GridViewCommandEventArgs e)

@@ -50,6 +50,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+                    <span hidden><asp:Label ID="LblSelectedStudent" runat="server"></asp:Label><asp:Label ID="LblSelectedCourse" runat="server"></asp:Label></span>
                 </div>
             </div>
         </div>
