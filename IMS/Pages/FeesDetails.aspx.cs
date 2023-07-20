@@ -186,7 +186,7 @@ namespace IMS.Pages
             PopulateLabels(selectedStudent, selectedCourse);
             ButtonSubmit.Text = "Submit";
             BtnCancel.Visible = false;
-            TxtAmountPaid.Text = string.Empty;
+            TxtAmountPaid.Text = "0";
         }
 
         private void LoadFeeDetailsGrid(int? StudentId)
