@@ -29,7 +29,8 @@ namespace IMS.Pages
             if (ButtonSubmit.Text == "Update")
                TxtDateText.Text = TxtDateText.Text;
             if (ButtonSubmit.Text == "Submit")
-               TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+                if(TxtDateText.Text =="")
+                  TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
             
             if (!IsPostBack)
             {
@@ -59,6 +60,28 @@ namespace IMS.Pages
             }
         }
 
+        protected void TxtDateText_TextChanged(object sender, EventArgs e)
+        {
+            if (DateTime.TryParse(TxtDateText.Text, out DateTime selectedDate))
+            {
+                DateTime today = DateTime.Today;
+
+                if (selectedDate.Date < today)
+                {
+                    ErrorLabel.Text = "Note* : Selected date cannot be earlier than today.";
+                    ErrorLabel.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    ErrorLabel.Text = "";
+                }
+            }
+            else
+            {
+                ErrorLabel.Text = "Note* : Invalid date format.";
+                ErrorLabel.ForeColor = System.Drawing.Color.Red;
+            }
+        }
         protected void DrpDwnCourseList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ButtonSubmit.Text == "Submit")

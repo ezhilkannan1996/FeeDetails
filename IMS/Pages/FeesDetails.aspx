@@ -12,23 +12,24 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <asp:label runat="server" CssClass="form-control-static">Receipt ID:</asp:label>
+                            <asp:Label runat="server" CssClass="form-control-static">Receipt ID:</asp:Label>
                             <asp:Label ID="LabelReceiptIdText" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">
-                            <asp:label runat="server" CssClass="form-control-static">Select Student:</asp:label>
+                            <asp:Label runat="server" CssClass="form-control-static">Select Student:</asp:Label>
                             <asp:DropDownList ID="DrpDwnStudentList" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DrpDwnStudentList_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <asp:label runat="server" CssClass="form-control-static">Select Course:</asp:label>
+                            <asp:Label runat="server" CssClass="form-control-static">Select Course:</asp:Label>
                             <asp:DropDownList ID="DrpDwnCourseList" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DrpDwnCourseList_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <asp:label runat="server" CssClass="form-control-static">Date:</asp:label>
-                            <asp:TextBox ID="TxtDateText" runat="server" TextMode="DateTimeLocal" CssClass="form-control"></asp:TextBox>
+                            <asp:Label runat="server" CssClass="form-control-static">Date:</asp:Label>
+                            <asp:TextBox ID="TxtDateText" runat="server" AutoPostBack="true" TextMode="DateTimeLocal" CssClass="form-control" OnTextChanged="TxtDateText_TextChanged"></asp:TextBox>
+                            <asp:Label ID="ErrorLabel" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">
-                            <asp:label runat="server" CssClass="form-control-static">Amount:</asp:label>
+                            <asp:Label runat="server" CssClass="form-control-static">Amount:</asp:Label>
                             <div class="input-group">
                                 <asp:TextBox ID="TxtAmountPaid" runat="server" CssClass="form-control" Text="0" Width="226px"></asp:TextBox>
                             </div>
@@ -50,13 +51,19 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <span hidden><asp:Label ID="LblSelectedStudent" runat="server"></asp:Label><asp:Label ID="LblSelectedCourse" runat="server"></asp:Label></span>
+                    <span hidden>
+                        <asp:Label ID="LblSelectedStudent" runat="server"></asp:Label><asp:Label ID="LblSelectedCourse" runat="server"></asp:Label></span>
                 </div>
             </div>
         </div>
     </div>
     <style>
-        /* Global Styles */
+        
+        #ErrorLabel{
+            background-color: lightblue;
+            color: white;
+            border: 1px solid black;
+        }
 
         .btn-red {
             background-color: red;
