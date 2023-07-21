@@ -1,6 +1,7 @@
 ﻿using IMS.Data;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
 namespace IMS.Pages
@@ -18,20 +19,21 @@ namespace IMS.Pages
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(LblSelectedStudent.Text))
-               selectedStudent = Convert.ToInt32(LblSelectedStudent.Text);
+                selectedStudent = Convert.ToInt32(LblSelectedStudent.Text);
             if (!string.IsNullOrEmpty(LblSelectedCourse.Text))
                 selectedCourse = Convert.ToInt32(LblSelectedCourse.Text);
             if (selectedStudent != null)
-               LoadFeeDetailsGrid(selectedStudent);
+                LoadFeeDetailsGrid(selectedStudent);
             else
-               LoadStudentDropDown();         
+                LoadStudentDropDown();
 
-            if (ButtonSubmit.Text == "Update")
-               TxtDateText.Text = TxtDateText.Text;
-            if (ButtonSubmit.Text == "Submit")
-                if(TxtDateText.Text =="")
-                  TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
-            
+            //if (ButtonSubmit.Text == "Update")
+            //    TxtDateText.Text = TxtDateText.Text;
+            //if (ButtonSubmit.Text == "Submit")
+            //    if (TxtDateText.Text == "")
+            //TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+            LoadDateTime();
+
             if (!IsPostBack)
             {
                 LoadStudentDropDown();
@@ -44,6 +46,7 @@ namespace IMS.Pages
 
         protected void DrpDwnStudentList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            LoadDateTime();
             selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
             LblSelectedStudent.Text = selectedStudent.ToString();
             LoadCourseDropDown(selectedStudent);
@@ -55,35 +58,37 @@ namespace IMS.Pages
             }
             if (ButtonSubmit.Text == "Update")
             {
-                TxtDateText.Text = TxtDateText.Text;
+                //TxtDateText.Text = TxtDateText.Text;
                 BtnCancel.Visible = true;
             }
         }
 
         protected void TxtDateText_TextChanged(object sender, EventArgs e)
         {
-            if (DateTime.TryParse(TxtDateText.Text, out DateTime selectedDate))
-            {
-                DateTime today = DateTime.Today;
+            LoadDateTime();
+            //if (DateTime.TryParse(TxtDateText.Text, out DateTime selectedDate))
+            //{
+            //    DateTime today = DateTime.Today;
 
-                if (selectedDate.Date < today)
-                {
-                    ErrorLabel.Text = "Note* : Selected date cannot be earlier than today.";
-                    ErrorLabel.ForeColor = System.Drawing.Color.Red;
-                }
-                else
-                {
-                    ErrorLabel.Text = "";
-                }
-            }
-            else
-            {
-                ErrorLabel.Text = "Note* : Invalid date format.";
-                ErrorLabel.ForeColor = System.Drawing.Color.Red;
-            }
+            //    if (selectedDate.Date < today)
+            //    {
+            //        ErrorLabel.Text = "Note* : Selected date cannot be earlier than today.";
+            //        ErrorLabel.ForeColor = System.Drawing.Color.Red;
+            //    }
+            //    else
+            //    {
+            //        ErrorLabel.Text = "";
+            //    }
+            //}
+            //else
+            //{
+            //    ErrorLabel.Text = "Note* : Invalid date format.";
+            //    ErrorLabel.ForeColor = System.Drawing.Color.Red;
+            //}
         }
         protected void DrpDwnCourseList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            LoadDateTime();
             if (ButtonSubmit.Text == "Submit")
             {
                 GenerateReceiptId();
@@ -96,7 +101,7 @@ namespace IMS.Pages
             }
             if (ButtonSubmit.Text == "Update")
             {
-                TxtDateText.Text = TxtDateText.Text;
+                //TxtDateText.Text = TxtDateText.Text;
                 BtnCancel.Visible = true;
             }
         }
@@ -143,9 +148,10 @@ namespace IMS.Pages
 
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            if (DateTime.Today < Convert.ToDateTime(TxtDateText.Text))
-            {
-                if (ButtonSubmit.Text == "Submit")
+            LoadDateTime();
+            //if (DateTime.Today < Convert.ToDateTime(TxtDateText.Text))
+            //{
+            if (ButtonSubmit.Text == "Submit")
                 {
                     if (string.IsNullOrEmpty(LblSelectedStudent.Text))
                         selectedStudent = Convert.ToInt32(DrpDwnStudentList.SelectedValue);
@@ -153,20 +159,25 @@ namespace IMS.Pages
                     selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
                     LblSelectedCourse.Text = selectedCourse.ToString();
                     PopulateLabels(selectedStudent, selectedCourse);
-                    if (Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) > remainingFee || Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) <= 0)
+                    if (Regex.IsMatch(TxtAmountPaid.Text, @"^\d+$"))
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
+                        if (Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) > remainingFee || Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) <= 0)
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount should be lesser than remaining fee');", true);
+                        }
+                        else
+                        {
+                            selectedDate = Convert.ToDateTime(TxtDateText.Text);
+                            amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
+                            instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
+                            LoadFeeDetailsGrid(selectedStudent);
+                            TxtAmountPaid.Text = string.Empty;
+                            PopulateLabels(selectedStudent, selectedCourse);
+                            LoadNextPaymentAfterUpdate();
+                        }
                     }
                     else
-                    {
-                        selectedDate = Convert.ToDateTime(TxtDateText.Text);
-                        amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
-                        instituteEntities.spFeesDetailsInsert(selectedStudent, selectedCourse, selectedDate, amount);
-                        LoadFeeDetailsGrid(selectedStudent);
-                        TxtAmountPaid.Text = string.Empty;
-                        PopulateLabels(selectedStudent, selectedCourse);
-                        LoadNextPaymentAfterUpdate();
-                    }
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
                 }
                 if (ButtonSubmit.Text == "Update")
                 {
@@ -176,30 +187,36 @@ namespace IMS.Pages
                     selectedCourse = Convert.ToInt32(DrpDwnCourseList.SelectedValue);
                     LblSelectedCourse.Text = selectedCourse.ToString();
                     PopulateLabels(selectedStudent, selectedCourse);
-                    if (Convert.ToInt32(TxtAmountPaid.Text) > remainingFee || Convert.ToInt32(TxtAmountPaid.Text) <= 0)
-                       ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
-                    else
+                    if (Regex.IsMatch(TxtAmountPaid.Text, @"^\d+$"))
                     {
-                        receiptId = Convert.ToInt32(LabelReceiptIdText.Text);
-                        selectedDate = Convert.ToDateTime(TxtDateText.Text);
-                        amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
-                        instituteEntities.spUpdateFeeDatails(receiptId, selectedStudent, selectedCourse, selectedDate, amount);
-                        LoadFeeDetailsGrid(selectedStudent);
-                        TxtAmountPaid.Text = string.Empty;
-                        PopulateLabels(selectedStudent, selectedCourse);
-                        LoadNextPaymentAfterUpdate();
+                        if (Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) > remainingFee || Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text))) <= 0)
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount should be lesser than remaining fee');", true);
+                        else
+                        {
+                            receiptId = Convert.ToInt32(LabelReceiptIdText.Text);
+                            selectedDate = Convert.ToDateTime(TxtDateText.Text);
+                            amount = Convert.ToInt32(Math.Round(Convert.ToDecimal(TxtAmountPaid.Text)));
+                            instituteEntities.spUpdateFeeDatails(receiptId, selectedStudent, selectedCourse, selectedDate, amount);
+                            LoadFeeDetailsGrid(selectedStudent);
+                            TxtAmountPaid.Text = string.Empty;
+                            PopulateLabels(selectedStudent, selectedCourse);
+                            LoadNextPaymentAfterUpdate();
+                        }
                     }
+                    else
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Entered amount is not in correct format');", true);
                 }
-            }
-            else
-            {
-                BtnCancel.Visible = true;
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Select date today or greater than today');", true);
-            }
+            //}
+            //else
+            //{
+            //    BtnCancel.Visible = true;
+            //    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Select date today or greater than today');", true);
+            //}
         }
 
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
+            LoadDateTime();
             LoadNextPaymentAfterUpdate();
         }
 
@@ -218,8 +235,14 @@ namespace IMS.Pages
             FeeDetailsGrid.DataBind();
         }
 
+        private void LoadDateTime()
+        {
+            TxtDateText.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+        }
+
         protected void FeeDetailsGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            LoadDateTime();
             FeeDetailsGrid.PageIndex = e.NewPageIndex;
             if (ButtonSubmit.Text == "Submit")
                 BtnCancel.Visible = false;
@@ -229,6 +252,7 @@ namespace IMS.Pages
 
         protected void FeeDetailsGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            LoadDateTime();
             if (e.CommandName == "SelectRow")
             {
                 ButtonSubmit.Text = "Update";
@@ -244,7 +268,7 @@ namespace IMS.Pages
                 DrpDwnStudentList.SelectedValue = result.StudentId.ToString();
                 LoadCourseDropDown(result.StudentId);
                 DrpDwnCourseList.SelectedValue = result.course_id.ToString();
-                TxtDateText.Text = result.DateOfPayment?.ToString("yyyy-MM-ddTHH:mm");
+                //TxtDateText.Text = result.DateOfPayment?.ToString("yyyy-MM-ddTHH:mm");
                 TxtAmountPaid.Text = result.Amount.ToString();
             }
         }

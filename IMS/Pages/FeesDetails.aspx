@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <asp:Label runat="server" CssClass="form-control-static">Date:</asp:Label>
-                            <asp:TextBox ID="TxtDateText" runat="server" AutoPostBack="true" TextMode="DateTimeLocal" CssClass="form-control" OnTextChanged="TxtDateText_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="TxtDateText" runat="server" AutoPostBack="true" TextMode="DateTimeLocal" CssClass="form-control" OnTextChanged="TxtDateText_TextChanged" ReadOnly="true"></asp:TextBox>
                             <asp:Label ID="ErrorLabel" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">
