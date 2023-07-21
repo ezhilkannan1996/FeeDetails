@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <asp:Label runat="server" CssClass="form-control-static">Receipt ID:</asp:Label>
+                            <asp:Label runat="server" CssClass="form-control-static">Receipt Id:</asp:Label>
                             <asp:Label ID="LabelReceiptIdText" runat="server" CssClass="form-control-static"></asp:Label>
                         </div>
                         <div class="form-group">

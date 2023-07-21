@@ -59,6 +59,7 @@ namespace IMS.Pages
             if (ButtonSubmit.Text == "Update")
             {
                 //TxtDateText.Text = TxtDateText.Text;
+                PopulateLabels(selectedStudent, selectedCourse);
                 BtnCancel.Visible = true;
             }
         }
@@ -101,6 +102,7 @@ namespace IMS.Pages
             }
             if (ButtonSubmit.Text == "Update")
             {
+                PopulateLabels(selectedStudent, selectedCourse);
                 //TxtDateText.Text = TxtDateText.Text;
                 BtnCancel.Visible = true;
             }
@@ -253,13 +255,14 @@ namespace IMS.Pages
         protected void FeeDetailsGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             LoadDateTime();
+            PopulateLabels(selectedStudent, selectedCourse);
             if (e.CommandName == "SelectRow")
             {
                 ButtonSubmit.Text = "Update";
                 BtnCancel.Visible = true;
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
                 GridViewRow selectedRow = FeeDetailsGrid.Rows[rowIndex];
-                LabelAmountText.Text = string.Empty;
+               // LabelAmountText.Text = string.Empty;
                 receiptId = Convert.ToInt32(selectedRow.Cells[1].Text);
                 spGetFeeDatailsById_Result result = new spGetFeeDatailsById_Result();
                 var data = instituteEntities.spGetFeeDatailsById(receiptId);
